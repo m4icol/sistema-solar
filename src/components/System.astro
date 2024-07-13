@@ -1,0 +1,51 @@
+---
+
+---
+
+<script>
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+ 
+    // CONSTS
+
+    const wScreen = window.innerWidth;
+    const hScreen = window.innerHeight;
+
+    // RENDERER
+
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+    });
+
+    renderer.setSize(wScreen, hScreen);
+    document.body.appendChild(renderer.domElement);
+
+    // CAMERA
+
+    const camera = new THREE.PerspectiveCamera(
+        60, 
+        wScreen / hScreen,
+        0.001,
+        1000
+    );
+
+    // SCENE
+
+    const scene = new THREE.Scene();
+
+    // CONTENT
+
+    
+
+
+
+    // RENDER
+
+    function render() {
+        requestAnimationFrame(render);
+        renderer.render(scene, camera);
+    }
+
+    render();
+    
+</script>
