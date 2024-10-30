@@ -1,17 +1,12 @@
----
-
----
-
 <script>
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
- 
-    // CONSTS
 
     const wScreen = window.innerWidth;
     const hScreen = window.innerHeight;
-
-    // RENDERER
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, wScreen / hScreen, 0.1, 1000);
+    camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -20,63 +15,62 @@
     renderer.setSize(wScreen, hScreen);
     document.body.appendChild(renderer.domElement);
 
-    // CAMERA
+    new OrbitControls(camera, renderer.domElement);
 
-    const camera = new THREE.PerspectiveCamera(
-        60, 
-        wScreen / hScreen,
-        0.001,
-        1000
-    );
+    // -------
+    
+    const loader = new THREE.TextureLoader();
 
-    camera.position.z = 10;
+    const earthTexture = "src/components/textures/earth_daymap.jpg";
+    const earthTextureNight = "src/components/textures/earth_nightmap.jpg";
+    const earthTextureClouds = "src/components/textures/earth_clouds.jpg";
 
-    // SCENE
-
-    const scene = new THREE.Scene();
-
-    // CONTENT
+    // -------
 
     const earthGroup = new THREE.Group();
     earthGroup.rotation.z = -23.4 * Math.PI / 180;
     scene.add(earthGroup);
 
-    const loader = new THREE.TextureLoader();
-    const matEarth = new THREE.MeshPhongMaterial({
-        map: loader.load("src/components/textures/earth_daymap.jpg"),
+    const earthGeometry = new THREE.IcosahedronGeometry(1, 12);
+    const earthMaterial = new THREE.MeshPhongMaterial({
+        map: loader.load(earthTexture)
     });
-    const geoEarth = new THREE.IcosahedronGeometry(4, 20);
-    const earth = new THREE.Mesh(geoEarth, matEarth);
+    const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+    earthGroup.add(earthMesh);
 
-    scene.add(earth);
 
-    const lightsMat = new THREE.MeshBasicMaterial({
-        map: loader.load("src/components/textures/earth_nightmap.jpg"),
+    const lightsMaterial = new THREE.MeshBasicMaterial({
+        map: loader.load(earthTextureNight),
         blending: THREE.AdditiveBlending,
     });
-    const lightsMesh = new THREE.Mesh(geoEarth, lightsMat);
-    earthGroup.add(lightsMesh); 
+    const lightsMesh = new THREE.Mesh(earthGeometry, lightsMaterial);
+    earthGroup.add(lightsMesh);
 
 
-    // LIGHT
+    const cloudMaterial = new THREE.MeshBasicMaterial({
+        map: loader.load(earthTextureClouds),
+        blending: THREE.AdditiveBlending,
+        opacity: 0.4,
+        transparent: true,
+    })
+    const cloudMesh = new THREE.Mesh(earthGeometry, cloudMaterial);
+    cloudMesh.scale.setScalar(1.003);
+    earthGroup.add(cloudMesh);
+
+    // -------
 
     const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
     sunLight.position.set(-2, 0.5, 1.5);
     scene.add(sunLight);
 
-    // CONTROLS
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-
-    // RENDER
-
     function render() {
-        controls.update();
         requestAnimationFrame(render);
 
-        earth.rotation.y += 0.002
-        lightsMesh.rotation.z += 0.002
-        renderer.render(scene, camera);
+        earthMesh.rotation.y += 0.002;
+        lightsMesh.rotation.y += 0.002;
+        cloudMesh.rotation.y += 0.0025;
+
+        renderer.render(scene, camera)
     }
 
     render();
