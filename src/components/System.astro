@@ -29,20 +29,53 @@
         1000
     );
 
+    camera.position.z = 10;
+
     // SCENE
 
     const scene = new THREE.Scene();
 
     // CONTENT
 
-    
+    const earthGroup = new THREE.Group();
+    earthGroup.rotation.z = -23.4 * Math.PI / 180;
+    scene.add(earthGroup);
+
+    const loader = new THREE.TextureLoader();
+    const matEarth = new THREE.MeshPhongMaterial({
+        map: loader.load("src/components/textures/earth_daymap.jpg"),
+    });
+    const geoEarth = new THREE.IcosahedronGeometry(4, 20);
+    const earth = new THREE.Mesh(geoEarth, matEarth);
+
+    scene.add(earth);
+
+    const lightsMat = new THREE.MeshBasicMaterial({
+        map: loader.load("src/components/textures/earth_nightmap.jpg"),
+        blending: THREE.AdditiveBlending,
+    });
+    const lightsMesh = new THREE.Mesh(geoEarth, lightsMat);
+    earthGroup.add(lightsMesh); 
 
 
+    // LIGHT
+
+    const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
+    sunLight.position.set(-2, 0.5, 1.5);
+    scene.add(sunLight);
+
+    // CONTROLS
+
+    const controls = new OrbitControls(camera, renderer.domElement);
 
     // RENDER
 
     function render() {
+        controls.update();
         requestAnimationFrame(render);
+
+        earth.rotation.y += 0.002
+        lightsMesh.rotation.z += 0.002
         renderer.render(scene, camera);
     }
 
