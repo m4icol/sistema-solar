@@ -21,9 +21,9 @@
     
     const loader = new THREE.TextureLoader();
 
-    const earthTexture = "src/components/textures/earth_daymap.jpg";
-    const earthTextureNight = "src/components/textures/earth_nightmap.jpg";
-    const earthTextureClouds = "src/components/textures/earth_clouds.jpg";
+    const earthTexture = "/textures/earth_daymap.jpg";
+    const earthTextureNight = "/textures/earth_nightmap.jpg";
+    const earthTextureClouds = "/textures/earth_clouds.jpg";
 
     // -------
 
@@ -50,7 +50,7 @@
     const cloudMaterial = new THREE.MeshBasicMaterial({
         map: loader.load(earthTextureClouds),
         blending: THREE.AdditiveBlending,
-        opacity: 0.4,
+        opacity: 0.3,
         transparent: true,
     })
     const cloudMesh = new THREE.Mesh(earthGeometry, cloudMaterial);
@@ -68,7 +68,7 @@
 
         earthMesh.rotation.y += 0.002;
         lightsMesh.rotation.y += 0.002;
-        cloudMesh.rotation.y += 0.0025;
+        cloudMesh.rotation.y += 0.003;
 
         renderer.render(scene, camera)
     }
