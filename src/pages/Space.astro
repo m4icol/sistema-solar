@@ -2,6 +2,7 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { createStars } from '../components/startField.js';
+    import { Earth } from '../components/Earth';
 
     const wScreen = window.innerWidth;
     const hScreen = window.innerHeight;
@@ -21,48 +22,16 @@
     // -------
     
     const loader = new THREE.TextureLoader();
-
-    const earthTexture = "/textures/earth_day.webp";
-    const earthTextureNight = "/textures/earth_night.webp";
-    const earthTextureClouds = "/textures/earth_clouds.webp";
-
     const stars = createStars(scene);
 
     // -------
 
-    const earthGroup = new THREE.Group();
-    earthGroup.rotation.z = -23.4 * Math.PI / 180;
-    scene.add(earthGroup);
-
-    const earthGeometry = new THREE.IcosahedronGeometry(1, 12);
-    const earthMaterial = new THREE.MeshPhongMaterial({
-        map: loader.load(earthTexture)
-    });
-    const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-    earthGroup.add(earthMesh);
-
-
-    const lightsMaterial = new THREE.MeshBasicMaterial({
-        map: loader.load(earthTextureNight),
-        blending: THREE.AdditiveBlending,
-    });
-    const lightsMesh = new THREE.Mesh(earthGeometry, lightsMaterial);
-    earthGroup.add(lightsMesh);
-
-
-    const cloudMaterial = new THREE.MeshBasicMaterial({
-        map: loader.load(earthTextureClouds),
-        blending: THREE.AdditiveBlending,
-        opacity: 0.3,
-        transparent: true,
-    })
-    const cloudMesh = new THREE.Mesh(earthGeometry, cloudMaterial);
-    cloudMesh.scale.setScalar(1.003);
-    earthGroup.add(cloudMesh);
+    const { earthGroup, earthMesh, lightsMesh, cloudMesh } = Earth(loader);
+    scene.add(earthGroup)
 
     // -------
 
-    const sunLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
     sunLight.position.set(-2, 0.5, 1.5);
     scene.add(sunLight);
 
