@@ -3,6 +3,21 @@
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     import { createStars } from '../components/startField.js';
     import { Earth } from '../components/Earth';
+    import { createPlanet } from '../components/planets';
+
+    import {
+    jupiterTexture,
+    marsTexture,
+    mercuryTexture,
+    neptuneTexture,
+    plutoTexture,
+    saturnRingTexture,
+    saturnTexture,
+    sunTexture,
+    uranusRingTexture,
+    uranusTexture,
+    venusTexture,
+    } from "../components/textures";
 
     const wScreen = window.innerWidth;
     const hScreen = window.innerHeight;
@@ -29,6 +44,13 @@
     const { earthGroup, earthMesh, lightsMesh, cloudMesh } = Earth(loader);
     scene.add(earthGroup)
 
+    createPlanet(12, jupiterTexture, 140, null, loader, scene);
+    createPlanet(4, marsTexture, 40, null, loader, scene);
+    createPlanet(3.2, mercuryTexture, 30, null, loader, scene);
+    createPlanet(7, neptuneTexture, 90, null, loader, scene);
+    createPlanet(2.8, plutoTexture, 20, null, loader, scene);
+    createPlanet(5.8, venusTexture, 60, null, loader, scene);
+    
     // -------
 
     const sunLight = new THREE.DirectionalLight(0xffffff, 0.3);
