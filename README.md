@@ -1,5 +1,7 @@
-# Sistema Solar en Three.js
 
+![image](https://github.com/user-attachments/assets/1d0a66f2-031b-478f-96dd-f39a693d1539)
+
+# Sistema Solar en Three.js
 Este proyecto es una simulación interactiva del sistema solar, desarrollado con Three.js. Permite visualizar los planetas girando sobre sus ejes y orbitando alrededor del Sol.
 
 ## Características
