@@ -7,7 +7,7 @@ export function createStars(scene) {
     size: 0.03,
   });
 
-  const starCount = 800;
+  const starCount = 500;
   const positions = new Float32Array(starCount * 3);
 
   for (let i = 0; i < starCount * 3; i++) {
