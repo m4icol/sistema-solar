@@ -1,9 +1,9 @@
 import * as THREE from "three";
 
 export function createRings(outer, scene) {
-  const spaceRingGeometry = new THREE.RingGeometry(outer - 0.1, outer, 60);
+  const spaceRingGeometry = new THREE.RingGeometry(outer - 0.25, outer, 100);
   const spaceRingMaterial = new THREE.MeshBasicMaterial({
-    color: 0x999999,
+    color: 0x888888,
     side: THREE.DoubleSide,
   });
   const spaceRingMesh = new THREE.Mesh(spaceRingGeometry, spaceRingMaterial);
