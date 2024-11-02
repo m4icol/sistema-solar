@@ -11,7 +11,7 @@ export function createStars(scene) {
   const positions = new Float32Array(starCount * 3);
 
   for (let i = 0; i < starCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 50;
+    positions[i] = (Math.random() - 0.5) * 350;
   }
 
   starGeometry.setAttribute(
